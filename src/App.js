@@ -2,18 +2,21 @@ import React, {Component} from "react"
 import Form from "./components/Form"
 import "./App.css"
 import Results from "./components/Results"
+import Rate from "./components/Rate"
 
 class App extends Component {
   constructor(props) {
     super(props)
 
     this.state = {
-      serviceType: "",
-      pounds: "0",
-      ounces: "0",
-      zipOrigin: "00000",
-      zipDestination: "00000",
-      results: null
+      data: {
+        serviceType: "",
+        pounds: "0",
+        ounces: "0",
+        zipOrigin: "00000",
+        zipDestination: "00000"
+      },
+      hasData: false
     }
 
     this.handleInputChange = this.handleInputChange.bind(this)
@@ -23,24 +26,22 @@ class App extends Component {
     const target = event.target
     const value = target.value
     const name = target.name
-
-    this.setState({
-      [name]: value
-    })
+    const data = {...this.state.data, [name]: value}
+    this.setState({data})
   }
 
   handleSubmit = event => {
-    const fields = Object.entries(this.state)
-    let data = ""
+    const fields = Object.entries(this.state.data)
+    let temp = ""
     for (const [key, value] of fields) {
-      data += `${key} ${value} \n`
+      temp += `${key} ${value} \n`
     }
-
-    alert(data)
+    alert(temp)
+    this.setState({hasData: true})
   }
 
   render() {
-    const {results} = this.state
+    const {hasData} = this.state
     return (
       <div className="App">
         <header>
@@ -51,7 +52,7 @@ class App extends Component {
             onFormChange={this.handleInputChange}
             onFormSubmit={this.handleSubmit}
           />
-          {results !== null && <Results />}
+          {hasData && <Rate data={this.state.data} />}
         </main>
       </div>
     )
