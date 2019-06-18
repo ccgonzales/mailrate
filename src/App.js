@@ -1,6 +1,6 @@
 import React, {Component} from "react"
-import Form from "./components/Form"
-import "./App.css"
+import FormPage from "./components/Form"
+//import "./App.css"
 import Results from "./components/Results"
 import Rate from "./components/Rate"
 
@@ -36,7 +36,7 @@ class App extends Component {
     for (const [key, value] of fields) {
       temp += `${key} ${value} \n`
     }
-    alert(temp)
+    //alert(temp)
     this.setState({hasData: true})
   }
 
@@ -48,7 +48,7 @@ class App extends Component {
           <h1>mailrate</h1>
         </header>
         <main>
-          <Form
+          <FormPage
             onFormChange={this.handleInputChange}
             onFormSubmit={this.handleSubmit}
           />

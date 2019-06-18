@@ -1,15 +1,36 @@
 import React from "react"
+import {Container, Divider, Segment} from "semantic-ui-react"
 
 const Results = ({response}) => {
-  console.log({response})
-
   let parser = new DOMParser()
   const doc = parser.parseFromString(response, "text/xml")
+  console.log({doc})
 
   return (
-    <div>
-      <h2>Rate: {response}</h2>
-    </div>
+    <React.Fragment>
+      <Divider hidden />
+      <Container>
+        <h2>Rate</h2>
+        <Divider />
+        <Segment.Group horizontal>
+          <Segment>
+            <h2>
+              Price: $
+              {
+                doc.getElementsByTagName("CommercialRate")[0].childNodes[0]
+                  .nodeValue
+              }
+            </h2>
+          </Segment>
+          <Segment>
+            <h3>
+              Zone:{" "}
+              {doc.getElementsByTagName("Zone")[0].childNodes[0].nodeValue}
+            </h3>
+          </Segment>
+        </Segment.Group>
+      </Container>
+    </React.Fragment>
   )
 }
 

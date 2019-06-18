@@ -1,6 +1,7 @@
 import React, {Component} from "react"
+import {Button, Form, Container} from "semantic-ui-react"
 
-class Form extends Component {
+class FormPage extends Component {
   constructor(props) {
     super(props)
     this.handleChange = this.handleChange.bind(this)
@@ -19,14 +20,15 @@ class Form extends Component {
   render() {
     const {serviceType, pounds, ounces, zipOrigin, zipDestination} = this.props
     return (
-      <div>
-        <form onSubmit={this.handleFormSubmit}>
-          <label>Service Type:</label>
-          <select
+      <Container>
+        <Form onSubmit={this.handleFormSubmit}>
+          <Form.Field
+            label="Service Type"
             name="serviceType"
-            value={serviceType}
-            required
+            control="select"
             onChange={this.handleChange}
+            required
+            value={serviceType}
           >
             <option>Choose Service</option>
             <option value="FIRST CLASS">First Class</option>
@@ -34,47 +36,53 @@ class Form extends Component {
               First Class Commercial
             </option>
             <option value="PRIORITY">Priority</option>
-          </select>
-          <label>Pounds:</label>
-          <input
-            name="pounds"
-            value={pounds}
-            type="number"
-            onChange={this.handleChange}
-          />
-          <label>Ounces:</label>
-          <input
-            name="ounces"
-            value={ounces}
-            type="number"
-            onChange={this.handleChange}
-          />
-          <label htmlFor="zipOrigin">Zip Origin:</label>
-          <input
-            name="zipOrigin"
-            id="zipOrigin"
-            value={zipOrigin}
-            type="text"
-            size="5"
-            required
-            onChange={this.handleChange}
-          />
-          <label htmlFor="zipDestination">Zip Destination:</label>
-          <input
-            name="zipDestination"
-            id="zipDestination"
-            value={zipDestination}
-            type="text"
-            size="5"
-            required
-            onChange={this.handleChange}
-          />
-          <button type="submit">Check Rate</button>
-          <button type="reset">Clear</button>
-        </form>
-      </div>
+          </Form.Field>
+          <Form.Group>
+            <Form.Input
+              name="pounds"
+              label="Pounds"
+              type="number"
+              max={70}
+              value={pounds}
+              onChange={this.handleChange}
+            />
+
+            <Form.Input
+              name="ounces"
+              label="Ounces"
+              type="number"
+              max={15.99}
+              value={ounces}
+              onChange={this.handleChange}
+            />
+          </Form.Group>
+          <Form.Group>
+            <Form.Input
+              name="zipOrigin"
+              label="Zip Origin"
+              type="text"
+              required
+              value={zipOrigin}
+              onChange={this.handleChange}
+            />
+
+            <Form.Input
+              name="zipDestination"
+              label="Zip Destination"
+              type="text"
+              required
+              value={zipDestination}
+              onChange={this.handleChange}
+            />
+          </Form.Group>
+          <Button type="submit" primary>
+            Check Rate
+          </Button>
+          <Button type="reset">Clear</Button>
+        </Form>
+      </Container>
     )
   }
 }
 
-export default Form
+export default FormPage
