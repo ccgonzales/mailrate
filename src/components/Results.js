@@ -4,7 +4,7 @@ import {Container, Divider, Segment} from "semantic-ui-react"
 const Results = ({response}) => {
   let parser = new DOMParser()
   const doc = parser.parseFromString(response, "text/xml")
-  console.log({doc})
+  console.log(doc)
 
   return (
     <React.Fragment>

@@ -13,6 +13,67 @@ class Rate extends Component {
     }
   }
 
+  buildXMLQuery() {
+    let query = document.implementation.createDocument("", "", null)
+    let rateRequest = query.createElement("RateV4Request")
+    rateRequest.setAttribute(
+      "USERID",
+      `${process.env.REACT_APP_USPS_API_USERID}`
+    )
+
+    let packageGroup = query.createElement("Package")
+    packageGroup.setAttribute("ID", "1")
+
+    let packageService = query.createElement("Service")
+    let packageFirstClassMailType = query.createElement("FirstClassMailType")
+    let packageZipOrigination = query.createElement("ZipOrigination")
+    let packageZipDestination = query.createElement("ZipDestination")
+    let packagePounds = query.createElement("Pounds")
+    let packageOunces = query.createElement("Ounces")
+    let packageContainer = query.createElement("Container")
+    let packageSize = query.createElement("Size")
+
+    let packageGroupItems = new Array(packageService)
+
+    //needs conditional
+    packageGroupItems.push(packageFirstClassMailType)
+
+    packageGroupItems.push(packageZipOrigination)
+    packageGroupItems.push(packageZipDestination)
+    packageGroupItems.push(packagePounds)
+    packageGroupItems.push(packageOunces)
+
+    //needs conditional
+    packageGroupItems.push(packageContainer)
+
+    packageGroupItems.push(packageSize)
+
+    packageGroupItems.forEach(item => packageGroup.appendChild(item))
+
+    //unfortunately, these can't be chained within each other
+    rateRequest.appendChild(packageGroup)
+    query.appendChild(rateRequest)
+
+    query.getElementsByTagName(
+      "Service"
+    )[0].innerHTML = this.props.data.serviceType
+    query.getElementsByTagName(
+      "ZipOrigination"
+    )[0].innerHTML = this.props.data.zipOrigin
+    query.getElementsByTagName(
+      "ZipDestination"
+    )[0].innerHTML = this.props.data.zipDestination
+    query.getElementsByTagName("Pounds")[0].innerHTML = this.props.data.pounds
+    query.getElementsByTagName("Ounces")[0].innerHTML = this.props.data.ounces
+    query.getElementsByTagName("Size")[0].innerHTML = "REGULAR"
+    query.getElementsByTagName("FirstClassMailType")[0].innerHTML =
+      "PACKAGE SERVICE"
+
+    let serializer = new XMLSerializer()
+
+    return serializer.serializeToString(query)
+  }
+
   // cant use because 'this.setState' because 'this' is bound to event; maybe try to rebind?
   //   xhrListener() {
   //     console.log(this.responseText)
@@ -23,18 +84,8 @@ class Rate extends Component {
   componentDidMount() {
     const urlBase =
       "http://production.shippingapis.com/ShippingAPI.dll?API=RateV4&XML="
-    const xmlPayload = `<RateV4Request USERID="${process.env.REACT_APP_USPS_API_USERID}">
-    <Package ID="1"><Service>${this.props.data.serviceType}</Service>
-    <FirstClassMailType>PACKAGE SERVICE</FirstClassMailType>
-    <ZipOrigination>${this.props.data.zipOrigin}</ZipOrigination>
-    <ZipDestination>${this.props.data.zipDestination}</ZipDestination>
-    <Pounds>${this.props.data.pounds}</Pounds>
-    <Ounces>${this.props.data.ounces}</Ounces>
-    <Container />
-    <Size>REGULAR</Size></Package>
-</RateV4Request>`
-
-    const urlComplete = urlBase + xmlPayload.replace(/\n/, "")
+    const xmlPayload = this.buildXMLQuery()
+    const urlComplete = urlBase + xmlPayload
 
     let xhr = new XMLHttpRequest()
     xhr.open("GET", encodeURI(urlComplete), true)
@@ -54,21 +105,10 @@ class Rate extends Component {
 
   componentDidUpdate(prevProps) {
     const data = this.props.data
-    console.log(prevProps)
     const urlBase =
       "http://production.shippingapis.com/ShippingAPI.dll?API=RateV4&XML="
-    const xmlPayload = `<RateV4Request USERID="${process.env.REACT_APP_USPS_API_USERID}">
-    <Package ID="1"><Service>${this.props.data.serviceType}</Service>
-    <FirstClassMailType>PACKAGE SERVICE</FirstClassMailType>
-    <ZipOrigination>${this.props.data.zipOrigin}</ZipOrigination>
-    <ZipDestination>${this.props.data.zipDestination}</ZipDestination>
-    <Pounds>${this.props.data.pounds}</Pounds>
-    <Ounces>${this.props.data.ounces}</Ounces>
-    <Container />
-    <Size>REGULAR</Size></Package>
-</RateV4Request>`
-
-    const urlComplete = urlBase + xmlPayload.replace(/\n/, "")
+    const xmlPayload = this.buildXMLQuery()
+    const urlComplete = urlBase + xmlPayload
 
     let xhr = new XMLHttpRequest()
     xhr.open("GET", encodeURI(urlComplete), true)
