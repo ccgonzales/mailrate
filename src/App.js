@@ -24,8 +24,33 @@ class App extends Component {
 
   handleInputChange(event) {
     const target = event.target
-    const value = target.value
+    let value = target.value
     const name = target.name
+
+    switch (name) {
+      case "pounds":
+        if (value !== null || value !== undefined) {
+          value = Math.ceil(parseFloat(value))
+        } else {
+          value = 0
+        }
+        break
+      case "ounces":
+        if (value !== null || value !== undefined) {
+          value = parseFloat(value)
+          if (value > 15.0 && value < 16.0) {
+            value = 15.99
+          } else {
+            value = Math.ceil(parseFloat(value))
+          }
+        } else {
+          value = 0
+        }
+        break
+      default:
+        break
+    }
+
     const data = {...this.state.data, [name]: value}
     this.setState({data})
   }
