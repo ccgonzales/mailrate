@@ -41,7 +41,7 @@ class FormPage extends Component {
             <Form.Input
               name="pounds"
               label="Pounds"
-              type="number"
+              type="text"
               max={70}
               value={pounds}
               onChange={this.handleChange}
@@ -50,7 +50,7 @@ class FormPage extends Component {
             <Form.Input
               name="ounces"
               label="Ounces"
-              type="number"
+              type="text"
               max={15.99}
               value={ounces}
               onChange={this.handleChange}
