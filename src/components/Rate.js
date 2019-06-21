@@ -36,7 +36,10 @@ class Rate extends Component {
     let packageGroupItems = new Array(packageService)
 
     //needs conditional
-    packageGroupItems.push(packageFirstClassMailType)
+    if (this.props.data.serviceType.indexOf("FIRST CLASS") !== -1) {
+      packageFirstClassMailType.innerHTML = "PACKAGE SERVICE"
+      packageGroupItems.push(packageFirstClassMailType)
+    }
 
     packageGroupItems.push(packageZipOrigination)
     packageGroupItems.push(packageZipDestination)
@@ -44,7 +47,9 @@ class Rate extends Component {
     packageGroupItems.push(packageOunces)
 
     //needs conditional
-    packageGroupItems.push(packageContainer)
+    if (this.props.data.serviceType !== "FIRST CLASS") {
+      packageGroupItems.push(packageContainer)
+    }
 
     packageGroupItems.push(packageSize)
 
@@ -66,8 +71,6 @@ class Rate extends Component {
     query.getElementsByTagName("Pounds")[0].innerHTML = this.props.data.pounds
     query.getElementsByTagName("Ounces")[0].innerHTML = this.props.data.ounces
     query.getElementsByTagName("Size")[0].innerHTML = "REGULAR"
-    query.getElementsByTagName("FirstClassMailType")[0].innerHTML =
-      "PACKAGE SERVICE"
 
     let serializer = new XMLSerializer()
 
