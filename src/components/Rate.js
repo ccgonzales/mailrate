@@ -35,9 +35,12 @@ class Rate extends Component {
 
     let packageGroupItems = new Array(packageService)
 
-    //needs conditional
+    //there's probably a more concise way of doing this
     if (this.props.data.serviceType.indexOf("FIRST CLASS") !== -1) {
       packageFirstClassMailType.innerHTML = "PACKAGE SERVICE"
+      if (this.props.data.serviceType.indexOf("COMMERCIAL") === -1) {
+        packageFirstClassMailType.innerHTML += " RETAIL"
+      }
       packageGroupItems.push(packageFirstClassMailType)
     }
 
@@ -46,10 +49,10 @@ class Rate extends Component {
     packageGroupItems.push(packagePounds)
     packageGroupItems.push(packageOunces)
 
-    //needs conditional
-    if (this.props.data.serviceType !== "FIRST CLASS") {
-      packageGroupItems.push(packageContainer)
+    if (this.props.data.serviceType === "FIRST CLASS") {
+      packageContainer.innerHTML = "VARIABLE"
     }
+    packageGroupItems.push(packageContainer)
 
     packageGroupItems.push(packageSize)
 
