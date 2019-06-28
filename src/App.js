@@ -1,8 +1,20 @@
 import React, {Component} from "react"
+import {Header, Container, Divider, Icon} from "semantic-ui-react"
 import FormPage from "./components/Form"
-//import "./App.css"
+import "./App.css"
 import Results from "./components/Results"
 import Rate from "./components/Rate"
+
+const Stripebar = () => {
+  const cells = []
+  for (let index = 0; index < window.innerWidth / 10 - 1; index++) {
+    cells.push(
+      React.createElement("div", {className: "stripebar__cell", key: index})
+    )
+  }
+
+  return <div className="stripebar">{cells.map(item => item)}</div>
+}
 
 class App extends Component {
   constructor(props) {
@@ -69,10 +81,20 @@ class App extends Component {
     const {hasData} = this.state
     return (
       <div className="App">
-        <header>
-          <h1>mailrate</h1>
-        </header>
+        <Stripebar />
+        <Header as="h1" textAlign="center" icon>
+          <Icon name="mail" />
+          <span className="title">Mailrate</span>
+        </Header>
         <main>
+          <Container text>
+            <p>
+              Quickly check the price of mailing a package via USPS. Fill out
+              the form below to recieve the rate and zone based on the
+              origination and destination of the package.
+            </p>
+          </Container>
+          <Divider />
           <FormPage
             onFormChange={this.handleInputChange}
             onFormSubmit={this.handleSubmit}

@@ -29,6 +29,7 @@ class FormPage extends Component {
             onChange={this.handleChange}
             required
             value={serviceType}
+            width={8}
           >
             <option>Choose Service</option>
             <option value="FIRST CLASS">First Class</option>
