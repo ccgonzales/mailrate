@@ -41,7 +41,7 @@ class App extends Component {
 
     switch (name) {
       case "pounds":
-        if (value !== null || value !== undefined) {
+        if (value !== null && value !== undefined && value !== "") {
           value = Math.ceil(parseFloat(value))
         } else {
           value = 0
