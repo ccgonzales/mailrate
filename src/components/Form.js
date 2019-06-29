@@ -32,6 +32,7 @@ class FormPage extends Component {
             width={8}
           >
             <option>Choose Service</option>
+            <option defaultValue="ONLINE">All</option>
             <option value="FIRST CLASS">First Class</option>
             <option value="FIRST CLASS COMMERCIAL">
               First Class Commercial

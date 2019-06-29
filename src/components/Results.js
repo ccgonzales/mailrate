@@ -1,5 +1,6 @@
 import React from "react"
-import {Container, Divider, Segment} from "semantic-ui-react"
+import {Container, Divider, Segment, Table} from "semantic-ui-react"
+import {Html5Entities} from "html-entities"
 
 const ErrorResults = props => {
   const errorDesc = props.xmlDoc.getElementsByTagName("Description")[0]
@@ -15,12 +16,61 @@ const ErrorResults = props => {
   )
 }
 
+const ResultsList = props => {
+  const list = Array.from(props.postageList)
+  const htmlEntities = new Html5Entities()
+  const cleaned = htmlEntities
+    .decode(list[0].getElementsByTagName("MailService")[0].innerHTML)
+    .replace(/&lt;\w+&gt;&\W\d+;&lt;\/\w+&gt;/, "")
+
+  console.log(cleaned)
+
+  return (
+    <Table>
+      <Table.Header>
+        <Table.Row>
+          <Table.HeaderCell>Service</Table.HeaderCell>
+          <Table.HeaderCell>Retail Rate</Table.HeaderCell>
+          <Table.HeaderCell>Commercial Rate</Table.HeaderCell>
+        </Table.Row>
+      </Table.Header>
+      <Table.Body>
+        {list.map((item, index) => (
+          <Table.Row key={index}>
+            <Table.Cell>
+              <span
+                dangerouslySetInnerHTML={{
+                  __html: htmlEntities
+                    .decode(
+                      item.getElementsByTagName("MailService")[0].innerHTML
+                    )
+                    .replace(/&lt;\w+&gt;&\W\d+;&lt;\/\w+&gt;/, "")
+                }}
+              />
+            </Table.Cell>
+            <Table.Cell textAlign="right">
+              {item.getElementsByTagName("Rate")[0].innerHTML}
+            </Table.Cell>
+            <Table.Cell textAlign="right">
+              {item.getElementsByTagName("CommercialRate").length !== 0
+                ? item.getElementsByTagName("CommercialRate")[0].innerHTML
+                : "N/A"}
+            </Table.Cell>
+          </Table.Row>
+        ))}
+      </Table.Body>
+    </Table>
+  )
+}
+
 const Results = ({response}) => {
   let parser = new DOMParser()
   const doc = parser.parseFromString(response, "text/xml")
   console.log(doc)
 
   const error = doc.getElementsByTagName("Error").length !== 0 ? true : false
+
+  const postageList = doc.getElementsByTagName("Postage")
 
   let price,
     zone = ""
@@ -41,20 +91,9 @@ const Results = ({response}) => {
       <Container>
         <Segment.Group horizontal>
           {error ? (
-            <Segment>
-              <ErrorResults xmlDoc={doc} />
-            </Segment>
+            <ErrorResults xmlDoc={doc} />
           ) : (
-            <Segment>
-              <h2>Rate</h2>
-              <Divider />
-              <Segment>
-                <h2>Price: ${price}</h2>
-              </Segment>
-              <Segment>
-                <h3>Zone: {zone}</h3>
-              </Segment>
-            </Segment>
+            <ResultsList postageList={postageList} />
           )}
         </Segment.Group>
       </Container>

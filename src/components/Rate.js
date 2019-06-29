@@ -32,6 +32,7 @@ class Rate extends Component {
     let packageOunces = query.createElement("Ounces")
     let packageContainer = query.createElement("Container")
     let packageSize = query.createElement("Size")
+    let packageMachinable = query.createElement("Machinable")
 
     let packageGroupItems = new Array(packageService)
 
@@ -55,6 +56,7 @@ class Rate extends Component {
     packageGroupItems.push(packageContainer)
 
     packageGroupItems.push(packageSize)
+    packageGroupItems.push(packageMachinable)
 
     packageGroupItems.forEach(item => packageGroup.appendChild(item))
 
@@ -74,6 +76,7 @@ class Rate extends Component {
     query.getElementsByTagName("Pounds")[0].innerHTML = this.props.data.pounds
     query.getElementsByTagName("Ounces")[0].innerHTML = this.props.data.ounces
     query.getElementsByTagName("Size")[0].innerHTML = "REGULAR"
+    query.getElementsByTagName("Machinable")[0].innerHTML = "false"
 
     let serializer = new XMLSerializer()
 
