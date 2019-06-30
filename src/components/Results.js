@@ -36,7 +36,7 @@ const ResultsList = props => {
       </Table.Header>
       <Table.Body>
         {list.map((item, index) => (
-          <Table.Row key={index}>
+          <Table.Row key={index} className="results__row">
             <Table.Cell>
               <span
                 dangerouslySetInnerHTML={{

@@ -27,3 +27,7 @@ body {
 .stripebar__cell:nth-of-type(4n) {
   background-color: rgba(0, 0, 255, 0.788);
 }
+
+.results__row:hover {
+  background-color: #ebebeb;
+}
