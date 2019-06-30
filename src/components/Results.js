@@ -67,16 +67,6 @@ const Results = ({response}) => {
 
   const postageList = doc.getElementsByTagName("Postage")
 
-  if (!error) {
-    zone = doc.getElementsByTagName("Zone")[0].childNodes[0].nodeValue
-    if (doc.getElementsByTagName("CommercialRate").length !== 0) {
-      price = doc.getElementsByTagName("CommercialRate")[0].childNodes[0]
-        .nodeValue
-    } else if (doc.getElementsByTagName("Rate").length !== 0) {
-      price = doc.getElementsByTagName("Rate")[0].childNodes[0].nodeValue
-    }
-  }
-
   return (
     <React.Fragment>
       <Divider hidden />

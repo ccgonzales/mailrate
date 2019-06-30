@@ -67,11 +67,8 @@ class App extends Component {
     this.setState({data})
   }
 
+  // this needs to be bit more functional; form validation
   handleSubmit = event => {
-    const fields = Object.entries(this.state.data)
-    for (const [key, value] of fields) {
-      temp += `${key} ${value} \n`
-    }
     this.setState({hasData: true})
   }
 
