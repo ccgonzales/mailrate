@@ -69,11 +69,9 @@ class App extends Component {
 
   handleSubmit = event => {
     const fields = Object.entries(this.state.data)
-    let temp = ""
     for (const [key, value] of fields) {
       temp += `${key} ${value} \n`
     }
-    //alert(temp)
     this.setState({hasData: true})
   }
 

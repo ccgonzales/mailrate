@@ -19,11 +19,6 @@ const ErrorResults = props => {
 const ResultsList = props => {
   const list = Array.from(props.postageList)
   const htmlEntities = new Html5Entities()
-  const cleaned = htmlEntities
-    .decode(list[0].getElementsByTagName("MailService")[0].innerHTML)
-    .replace(/&lt;\w+&gt;&\W\d+;&lt;\/\w+&gt;/, "")
-
-  console.log(cleaned)
 
   return (
     <Table>
@@ -66,14 +61,11 @@ const ResultsList = props => {
 const Results = ({response}) => {
   let parser = new DOMParser()
   const doc = parser.parseFromString(response, "text/xml")
-  console.log(doc)
+  //console.log(doc)
 
   const error = doc.getElementsByTagName("Error").length !== 0 ? true : false
 
   const postageList = doc.getElementsByTagName("Postage")
-
-  let price,
-    zone = ""
 
   if (!error) {
     zone = doc.getElementsByTagName("Zone")[0].childNodes[0].nodeValue
