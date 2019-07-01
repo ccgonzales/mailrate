@@ -78,7 +78,7 @@ class App extends Component {
       <div className="App">
         <Stripebar />
         <Header as="h1" textAlign="center" icon>
-          <Icon name="mail" />
+          <img src="logo.png" srcSet="logo_@2X.png" alt="logo" />
           <span className="title">Mailrate</span>
         </Header>
         <main>

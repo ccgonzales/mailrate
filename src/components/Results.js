@@ -25,8 +25,12 @@ const ResultsList = props => {
       <Table.Header>
         <Table.Row>
           <Table.HeaderCell>Service</Table.HeaderCell>
-          <Table.HeaderCell>Retail Rate</Table.HeaderCell>
-          <Table.HeaderCell>Commercial Rate</Table.HeaderCell>
+          <Table.HeaderCell className="results__headercell">
+            Retail Rate
+          </Table.HeaderCell>
+          <Table.HeaderCell className="results__headercell">
+            Commercial Rate
+          </Table.HeaderCell>
         </Table.Row>
       </Table.Header>
       <Table.Body>
@@ -44,9 +48,11 @@ const ResultsList = props => {
               />
             </Table.Cell>
             <Table.Cell textAlign="right">
+              <span className="results__text">Retail &mdash; </span>
               {item.getElementsByTagName("Rate")[0].innerHTML}
             </Table.Cell>
             <Table.Cell textAlign="right">
+              <span className="results__text">Commercial &mdash; </span>
               {item.getElementsByTagName("CommercialRate").length !== 0
                 ? item.getElementsByTagName("CommercialRate")[0].innerHTML
                 : "N/A"}
