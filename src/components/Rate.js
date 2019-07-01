@@ -95,7 +95,7 @@ class Rate extends Component {
 
   componentDidMount() {
     const urlBase =
-      "http://production.shippingapis.com/ShippingAPI.dll?API=RateV4&XML="
+      "https://secure.shippingapis.com/ShippingAPI.dll?API=RateV4&XML="
     const xmlPayload = this.buildXMLQuery()
     const urlComplete = urlBase + xmlPayload
 
