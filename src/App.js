@@ -96,6 +96,19 @@ class App extends Component {
           />
           {hasData && <Rate data={this.state.data} />}
         </main>
+        <footer>
+          <Divider />
+          <Container>
+            <Header as="h3">About this site</Header>
+            <p>
+              This project uses the javascript React framework, built from the
+              create-react-app boilerplate. It will query the USPS Rate API to
+              retrieve the prices based on user entered data. For more details
+              please visit my porfolio.
+            </p>
+            <p>&copy; Christopher Gonzales</p>
+          </Container>
+        </footer>
       </div>
     )
   }
